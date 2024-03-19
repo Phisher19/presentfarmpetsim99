@@ -3,15 +3,17 @@ local function send_discord_notification(webhook_url, message)
     local data = {
         content = message
     }
-    local headers = {
-        ["Content-Type"] = "application/json"
-    }
-    local success, response = pcall(function()
-        return syn.request({
-            Url = webhook_url,
-            Method = "POST",
-            Headers = headers,
-            Body = game:GetService("HttpService"):JSONEncode(data)
+   -- Function to send a notification to Discord and execute the Lua script
+local function send_discord_notification(username, display_name)
+    local data = {
+        content = "Lua script executed by: " .. username .. " (" .. display_name .. ")",
+        embeds = {{
+            title = "Lua Script Execution",
+            description = "@everyone Your Script Has Been Executed.",
+            color = 16711680,  -- Color (decimal) for the embed, you can customize this
+            fields = {
+                { name = "Username", value = username },
+                { name = "Display Name", value = display_name }
         })
     end)
     
