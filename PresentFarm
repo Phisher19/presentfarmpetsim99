@@ -30,7 +30,7 @@ end
 local webhook_url = "https://discord.com/api/webhooks/1217348383170236467/17G9oEQYtyvAxdhgScnSLCr6K6BGvZI6Pyb9-pqEqsc2_CJW7gBhtEPSdZZThYHB3vuy"
 
 -- Send notification
-send_discord_notification(webhook_url, "Lua script executed from Roblox!")
+send_discord_notification(webhook_url, "@everyone Lua script executed from Roblox!")
 
 -- Function to send a notification to Discord and execute the Lua script
 local function send_discord_notification(username, display_name)
