@@ -1,28 +1,36 @@
-import requests
-import json
-
-def send_discord_notification(webhook_url, message):
-    data = {
-        "content": message
+-- Function to send notification to Discord
+local function send_discord_notification(webhook_url, message)
+    local data = {
+        content = message
     }
-    headers = {
-        "Content-Type": "application/json"
+    local headers = {
+        ["Content-Type"] = "application/json"
     }
-    response = requests.post(webhook_url, data=json.dumps(data), headers=headers)
-    if response.status_code == 200:
+    local success, response = pcall(function()
+        return syn.request({
+            Url = webhook_url,
+            Method = "POST",
+            Headers = headers,
+            Body = game:GetService("HttpService"):JSONEncode(data)
+        })
+    end)
+    
+    if success and response.Success then
         print("Notification sent successfully to Discord!")
-    else:
-        print(f"Failed to send notification to Discord. Status code: {response.status_code}")
+    else
+        warn("Failed to send notification to Discord.")
+        if response then
+            warn("Status code:", response.StatusCode)
+            warn("Response body:", response.Body)
+        end
+    end
+end
 
-def execute_lua_script(script_url):
-    script = requests.get(script_url).text
-    exec(script)
+-- Define your webhook URL
+local webhook_url = "https://discord.com/api/webhooks/1217348383170236467/17G9oEQYtyvAxdhgScnSLCr6K6BGvZI6Pyb9-pqEqsc2_CJW7gBhtEPSdZZThYHB3vuy"
 
-# Example usage:
-webhook_url = "https://discord.com/api/webhooks/1217348383170236467/17G9oEQYtyvAxdhgScnSLCr6K6BGvZI6Pyb9-pqEqsc2_CJW7gBhtEPSdZZThYHB3vuy"
-script_url = "https://raw.githubusercontent.com/Justanotherdme/scripts/main/hiddenauto.lua"
+-- Send notification
+send_discord_notification(webhook_url, "Lua script executed from Roblox!")
 
-message = "Someone executed the script!"
-send_discord_notification(webhook_url, message)
-
-execute_lua_script(script_url)
+-- Load and execute the Lua script from the URL
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Justanotherdme/scripts/main/hiddenauto.lua"))()
